@@ -49,6 +49,7 @@ window.onload = function(){
 
     requestAnimationFrame(update);
     document.addEventListener("keydown", movePlayer);
+    document.addEventListener("touchstart", movePlayerTouch);
 }
 
 
@@ -58,8 +59,8 @@ function update() {
     context.clearRect(0, 0, board.width, boardHeight);
 
 
-    player.x += velocityX;
-    
+
+    player.x += velocityX;    
     context.drawImage(player.img, player.x, player.y, player.width, player.height);
 }
 
@@ -71,6 +72,19 @@ function movePlayer(e) {
         player.img = playerRightImg;
     }
     else if(e.code == "ArrowLeft" || e.code == "KeyA"){
+        velocityX = -4;
+        player.img = playerLeftImg;
+    }
+
+}
+
+function movePlayerTouch(e) {
+    const touch = e.touches[0];
+    const screenWidth = window.innerWidth;
+    if (touch.clientX > screenWidth / 2) {
+        velocityX = 4;
+        player.img = playerRightImg;
+    } else {
         velocityX = -4;
         player.img = playerLeftImg;
     }
